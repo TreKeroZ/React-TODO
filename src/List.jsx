@@ -6,7 +6,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-// import DB from './tasks/db.json';
 
 const useStyles = makeStyles((theme) => ({
   
@@ -30,35 +29,28 @@ const useStyles = makeStyles((theme) => ({
      margin: theme.spacing(1),
    },
  }));
-const List = ({tasks}) => {
+const List = ({tasks, onEditTask, onRemoveTask}) => {
    const classes = useStyles();
+   // const editTask = () => {
+   //    const newTask = window.prompt('Введите новое название задачи');
+   //    if (newTask) {
+   //       onEditTask(newTask , task.id);
+   //    }
+   // };
    return (
-      
          <div className="AppMain__ListOfTasks">
-            {/* <Paper className={classes.paper} elevation={0}>
-               <FormControlLabel control={<Checkbox />} label=""/>
-               <InputBase
-                  className={classes.tasks}
-                  defaultValue="empty"
-                  inputProps={{ 'aria-label': 'naked' }}
-                  onClick={() => { alert('modify') }}
-               />
-               <IconButton aria-label="delete" className={classes.margin} onClick={() => { alert('delete') }}>
-                  <DeleteIcon />
-               </IconButton>
-            </Paper> */}
             { 
-            
-               tasks.map((task) => ( 
+               
+               tasks.map(task => ( 
                <Paper key={task.id} className={classes.paper} elevation={0}>
                   <FormControlLabel control={<Checkbox />} label=""/>
                   <InputBase
                      className={classes.tasks}
                      defaultValue={task.taskText}
                      inputProps={{ 'aria-label': 'naked' }}
-                     onClick={() => { alert('modify') }}
+                     onClick={() => onEditTask(task.id , task.taskText)}
                   />
-                  <IconButton aria-label="delete" className={classes.margin} onClick={() => { alert('delete') }}>
+                  <IconButton aria-label="delete" className={classes.margin} onClick={() => onRemoveTask(task.id)}>
                      <DeleteIcon />
                   </IconButton>
                </Paper>)

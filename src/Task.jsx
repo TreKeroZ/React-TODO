@@ -1,8 +1,8 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import { Button } from '@material-ui/core';
 import {makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-
+import axios from 'axios';
 
 
 const theme = createMuiTheme({
@@ -36,14 +36,60 @@ const theme = createMuiTheme({
    },
  }));
 
- const Task = () => {
+ const Task = ({tasks, onAddTask}) => {
   const classes = useStyles();
+  const [inputValue, setInputValue] = useState('');
+
+  const addTask = (e) => {
+    if (!inputValue) {
+      alert('Введите задачу');
+      return;
+    }
+    const obj = {"taskText": inputValue};
+    axios
+      .post('http://localhost:3001/tasks', obj)
+      .then(({ data }) => {
+        onAddTask(data);
+        setInputValue('');
+      });
+  };
+
+  // const addTask = () => {
+  //     const obj = {"taskText": "I want"};
+  //     onAddTask(tasks.id);
+  // }
    return (
     <Fragment>
       <div className="AppMain__Task">
-        <TextField className={classes.input} id="TextArea" label="Write your task" helperText="" variant="outlined"/>
+        <TextField 
+        className={classes.input} 
+        value={inputValue} 
+        id="TextArea" 
+        label="Write your task" helperText="" 
+        variant="outlined"
+        onChange={e => {
+          setInputValue(e.target.value)
+          }
+        }
+        onKeyPress={e => {
+          if(e.charCode ===13){
+            addTask();
+            setInputValue('');
+          }
+        }
+          
+        }
+        
+        
+        />
           <ThemeProvider theme={theme}>
-            <Button className={classes.button} color="primary" variant="outlined"  onClick={() => { alert('clicked') }}>ADD</Button>
+            <Button 
+            className={classes.button} 
+            color="primary" 
+            variant="outlined"  
+            onClick={addTask}
+
+            >ADD</Button>
           </ThemeProvider>
       </div>
     </Fragment>
