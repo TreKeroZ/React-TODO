@@ -6,10 +6,9 @@ import List from './List';
 
 function App() {
   const [tasks, setTasks] = useState([]);
-
   useEffect(() => {
     axios
-      .get('http://localhost:3001/tasks')
+      .get(`${window.API_URL}/tasks`)
       .then(({ data }) => {
         setTasks(data);
       });
@@ -28,9 +27,9 @@ function App() {
     if (!newTaskText) {
       return;
     }
-
+    // 
     axios
-      .patch('http://localhost:3001/tasks/' + taskId, {
+      .patch(`${window.API_URL}/tasks/` + taskId, {
         taskText: newTaskText
       })
       .then(() => {
@@ -55,7 +54,7 @@ function App() {
   // Удаление задач
   const onRemoveTask = useCallback((taskId) => {
     if (window.confirm('Вы действительно хотите удалить задачу?')) {
-      axios.delete('http://localhost:3001/tasks/' + taskId)
+      axios.delete(`${window.API_URL}/tasks/` + taskId)
         .then(() => {
           setTasks(tasks.filter(item => item.id !== taskId));
         })
@@ -64,8 +63,6 @@ function App() {
         });
     }
   }, [setTasks, tasks]);
-
-  console.log({ tasks })
 
   return (
     <div className="App">

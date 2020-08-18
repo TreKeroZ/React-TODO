@@ -84,7 +84,6 @@ const Task = ({ tasks, onAddTask }) => {
             color="primary"
             variant="outlined"
             onClick={addTask}
-
           >ADD</Button>
         </ThemeProvider>
       </div>

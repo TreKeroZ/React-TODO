@@ -31,12 +31,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 const List = ({ tasks, onEditTask, onRemoveTask }) => {
    const classes = useStyles();
-   // const editTask = () => {
-   //    const newTask = window.prompt('Введите новое название задачи');
-   //    if (newTask) {
-   //       onEditTask(newTask , task.id);
-   //    }
-   // };
    return (
       <div className="AppMain__ListOfTasks">
          {
